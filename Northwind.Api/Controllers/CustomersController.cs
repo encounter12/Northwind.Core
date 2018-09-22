@@ -1,54 +1,54 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Northwind.Data.Models;
+using Northwind.Data.UnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Northwind.Api.Controllers
 {
-    //[Route("")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly NorthwindContext context;
+        private readonly IUnitOfWork unitOfWork;
 
-        public CustomersController(NorthwindContext context)
+        public CustomersController(IUnitOfWork unitOfWork)
         {
-            this.context = context;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet("customers")]
-        public ActionResult<IEnumerable<string>> GetCustomers()
+        public ActionResult<IQueryable<string>> GetCustomers()
         {
-            List<string> customerNames = this.context.Customers
-                .Select(c => c.ContactName)
-                .ToList();
+            IQueryable<string> customerNames = this.unitOfWork.CustomerRepository
+                .All()
+                .Select(c => c.ContactName);
 
-            return customerNames;
+            return Ok(customerNames);
         }
 
         [HttpGet("customer/{id}")]
         public ActionResult<string> GetSingleCustomer(string id)
         {
-            Customers customer = this.context.Customers.FirstOrDefault(c => c.CustomerId == id);
-
+            Customers customer = this.unitOfWork.CustomerRepository.GetCustomerById(id);
             return customer.ContactName;
         }
 
         [HttpGet("customer/{id}/orders")]
         public ActionResult<IEnumerable<int>> GetCustomerOrders(string id)
         {
-            Customers customer = this.context.Customers
-                .Include(c => c.Orders)
-                .FirstOrDefault(c => c.CustomerId == id);
+            IEnumerable<int> orderIDs = null;
 
-            if (customer == null)
+            try
+            {
+                orderIDs = this.unitOfWork.CustomerRepository
+                    .GetCustomerOrders(id)
+                    .Select(o => o.OrderId);
+            }
+            catch (Exception)
             {
                 return BadRequest();
             }
-
-            IEnumerable<int> orderIDs = customer.Orders.Select(o => o.OrderId);
 
             return orderIDs.ToList();
         }
