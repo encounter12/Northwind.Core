@@ -20,8 +20,14 @@
         {
             <tr>
                 <td>@customer.ContactName</td>
-                <td>@customer.OrdersCount</td>
-                <td>@Html.ActionLink("Details", "CustomerDetails", new { id = customer.Id })</td>
+                <td>
+                    <span class="badge">
+                        @customer.OrdersCount
+                    </span>
+               </td>
+                <td class="list-group-item">
+                    @Html.ActionLink("Details", "CustomerDetails", new { id = customer.Id })
+                </td>
             </tr>
         }
     </tbody>
