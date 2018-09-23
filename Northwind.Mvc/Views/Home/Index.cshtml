@@ -4,11 +4,17 @@
 }
 
 <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Contact Name</th>
+            <th>Orders Count</th>
+        </tr>
+    </thead>
     @foreach (var customer in @Model)
     {
-    <tr>
-        <td>@customer.ContactName</td>
-        <td>@customer.OrdersCount</td>
-    </tr>
+        <tr>
+            <td>@customer.ContactName</td>
+            <td>@customer.OrdersCount</td>
+        </tr>
     }
 </table>
