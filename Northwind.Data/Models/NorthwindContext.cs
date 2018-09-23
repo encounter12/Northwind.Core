@@ -1,9 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 
 namespace Northwind.Data.Models
 {
     public partial class NorthwindContext : DbContext
     {
+        public static readonly LoggerFactory MyLoggerFactory = new LoggerFactory(new[] {
+            new DebugLoggerProvider((_, __) => true)});
+
         public NorthwindContext()
         {
         }
@@ -31,7 +36,9 @@ namespace Northwind.Data.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;");
+                optionsBuilder
+                    .UseLoggerFactory(MyLoggerFactory)
+                    .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;");
             }
         }
 
