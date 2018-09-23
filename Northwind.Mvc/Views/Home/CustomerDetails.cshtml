@@ -1,8 +1,53 @@
-﻿@model IEnumerable<Northwind.Mvc.Models.OrderDetailsViewModel>
+﻿@model CustomerDetailsOrdersModel
 
 @{
     ViewData["Title"] = "CustomerDetails";
 }
+
+<h2>Customer Details</h2>
+
+<div class="container">
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.ContactName) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.ContactName)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.CompanyName) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.CompanyName)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.ContactTitle) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.ContactTitle)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.Address) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.Address)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.City) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.City)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.Region) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.Region)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.PostalCode) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.PostalCode)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.Country) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.Country)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.Phone) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.Phone)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">@Html.DisplayNameFor(model => model.CustomerDetails.Fax) :</div>
+        <div class="col-md-7">@Html.DisplayFor(modelItem => modelItem.CustomerDetails.Fax)</div>
+    </div>
+</div>
 
 <h2>Customer Orders</h2>
 
@@ -10,19 +55,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Total)
+                @Html.DisplayNameFor(model => model.Orders.FirstOrDefault().Total)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductsCount)
+                @Html.DisplayNameFor(model => model.Orders.FirstOrDefault().ProductsCount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PossibleIssue)
+                @Html.DisplayNameFor(model => model.Orders.FirstOrDefault().PossibleIssue)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Orders) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Total)
