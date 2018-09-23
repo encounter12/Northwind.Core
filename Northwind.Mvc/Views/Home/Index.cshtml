@@ -1,4 +1,4 @@
-﻿@model List<CustomerListViewModel>
+﻿@model IEnumerable<CustomerListViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -6,15 +6,23 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Contact Name</th>
-            <th>Orders Count</th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrdersCount)
+            </th>
+            <th></th>
         </tr>
     </thead>
-    @foreach (var customer in @Model)
-    {
-        <tr>
-            <td>@customer.ContactName</td>
-            <td>@customer.OrdersCount</td>
-        </tr>
-    }
+    <tbody>
+        @foreach (var customer in @Model)
+        {
+            <tr>
+                <td>@customer.ContactName</td>
+                <td>@customer.OrdersCount</td>
+                <td>@Html.ActionLink("Details", "CustomerDetails", new { id = customer.Id })</td>
+            </tr>
+        }
+    </tbody>
 </table>

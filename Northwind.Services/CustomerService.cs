@@ -21,6 +21,7 @@ namespace Northwind.Services
                 .All()
                 .Select(c => new CustomerListViewModel
                 {
+                    Id = c.CustomerId,
                     ContactName = c.ContactName,
                     OrdersCount = c.Orders.Count()
                 });
