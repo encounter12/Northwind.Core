@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Northwind.Mvc.Helpers;
 
 namespace Northwind.Mvc
 {
@@ -26,6 +27,8 @@ namespace Northwind.Mvc
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddScoped<IHttpHelpers, HttpHelpers>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
