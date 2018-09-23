@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Northwind.Data.Models;
-using Northwind.Data.UnitOfWork;
-using System;
-using System.Collections.Generic;
+using Northwind.Services.Contracts;
+using Northwind.Services.Models;
 using System.Linq;
 
 namespace Northwind.Api.Controllers
@@ -10,47 +8,37 @@ namespace Northwind.Api.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly ICustomerService customerService;
 
-        public CustomersController(IUnitOfWork unitOfWork)
+        private readonly IOrderService orderService;
+
+        public CustomersController(ICustomerService customerService, IOrderService orderService)
         {
-            this.unitOfWork = unitOfWork;
+            this.customerService = customerService;
+            this.orderService = orderService;
         }
 
         [HttpGet("customers")]
-        public ActionResult<IQueryable<string>> GetCustomers()
+        public ActionResult<IQueryable<CustomerListViewModel>> GetCustomers()
         {
-            IQueryable<string> customerNames = this.unitOfWork.CustomerRepository
-                .All()
-                .Select(c => c.ContactName);
+            IQueryable<CustomerListViewModel> customers = this.customerService.GetCustomers();
 
-            return Ok(customerNames);
+            return Ok(customers);
         }
 
         [HttpGet("customer/{id}")]
-        public ActionResult<string> GetSingleCustomer(string id)
+        public ActionResult<CustomerDetails> GetCustomerDetails(string id)
         {
-            Customers customer = this.unitOfWork.CustomerRepository.GetCustomerById(id);
-            return customer.ContactName;
+            CustomerDetails customer = this.customerService.GetCustomerDetails(id);
+            return Ok(customer);
         }
 
         [HttpGet("customer/{id}/orders")]
-        public ActionResult<IEnumerable<int>> GetCustomerOrders(string id)
+        public ActionResult<IQueryable<OrderDetailsViewModel>> GetCustomerOrders(string id)
         {
-            IEnumerable<int> orderIDs = null;
+            IQueryable<OrderDetailsViewModel> orders = this.orderService.GetOrdersByCustomer(id);
 
-            try
-            {
-                orderIDs = this.unitOfWork.CustomerRepository
-                    .GetCustomerOrders(id)
-                    .Select(o => o.OrderId);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-
-            return orderIDs.ToList();
+            return Ok(orders);
         }
     }
 }

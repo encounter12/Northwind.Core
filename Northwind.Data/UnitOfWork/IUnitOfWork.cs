@@ -8,5 +8,7 @@ namespace Northwind.Data.UnitOfWork
         NorthwindContext Context { get; }
 
         ICustomerRepository CustomerRepository { get; }
+
+        IOrderRepository OrderRepository { get; }
     }
 }

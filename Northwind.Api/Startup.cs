@@ -8,6 +8,8 @@ using Northwind.Data.Models;
 using Northwind.Data.Repositories;
 using Northwind.Data.Repositories.Contracts;
 using Northwind.Data.UnitOfWork;
+using Northwind.Services;
+using Northwind.Services.Contracts;
 
 namespace Northwind.Api
 {
@@ -29,8 +31,12 @@ namespace Northwind.Api
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

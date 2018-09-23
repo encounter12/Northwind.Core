@@ -8,6 +8,8 @@ namespace Northwind.Data.UnitOfWork
     {
         private ICustomerRepository customerRepository;
 
+        private IOrderRepository orderRepository;
+
         public UnitOfWork(NorthwindContext context)
         {
             this.Context = context;
@@ -26,6 +28,24 @@ namespace Northwind.Data.UnitOfWork
 
                 return customerRepository;
             }
+        }
+
+        public IOrderRepository OrderRepository
+        {
+            get
+            {
+                if (this.orderRepository == null)
+                {
+                    this.orderRepository = new OrderRepository(this.Context);
+                }
+
+                return orderRepository;
+            }
+        }
+
+        public void SaveChanges()
+        {
+            this.Context.SaveChanges();
         }
     }
 }
