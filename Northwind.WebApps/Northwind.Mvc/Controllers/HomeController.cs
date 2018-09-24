@@ -12,7 +12,6 @@ namespace Northwind.Mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ICustomerService customerService;
-
         private readonly IOrderService orderService;
 
         public HomeController(ICustomerService customerService, IOrderService orderService)
