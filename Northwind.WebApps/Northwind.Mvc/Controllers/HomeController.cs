@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
-using Northwind.Mvc.Services.Contracts;
+using Northwind.Services.Contracts;
+using Northwind.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

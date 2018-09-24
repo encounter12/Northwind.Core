@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Northwind.Mvc.Models
+namespace Northwind.Services.Models
 {
     public class OrderDetailsViewModel
     {

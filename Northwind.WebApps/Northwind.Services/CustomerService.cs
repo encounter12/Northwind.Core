@@ -1,13 +1,13 @@
-﻿using Northwind.Mvc.Helpers;
-using Northwind.Mvc.Models;
-using Northwind.Mvc.Services.Contracts;
+﻿using Northwind.Services.Helpers;
+using Northwind.Services.Models;
+using Northwind.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Northwind.Mvc.Services
+namespace Northwind.Services
 {
     public class CustomerService : ICustomerService
     {

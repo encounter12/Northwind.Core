@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Text;
 
-namespace Northwind.Mvc.Helpers
+namespace Northwind.Services.Helpers
 {
     public class JsonContent : StringContent
     {

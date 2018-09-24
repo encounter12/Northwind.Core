@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Northwind.Mvc.Models
+namespace Northwind.Services.Models
 {
     public class CustomerDetailsOrdersModel
     {

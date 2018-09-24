@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Northwind.Mvc.Helpers
+namespace Northwind.Services.Helpers
 {
     public interface IHttpHelpers
     {

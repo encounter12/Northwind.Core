@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Northwind.Mvc.Helpers
+namespace Northwind.Services.Helpers
 {
     public class HttpHelpers : IHttpHelpers
     {

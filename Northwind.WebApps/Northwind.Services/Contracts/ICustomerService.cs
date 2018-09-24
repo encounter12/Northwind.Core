@@ -1,8 +1,8 @@
-﻿using Northwind.Mvc.Models;
+﻿using Northwind.Services.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Northwind.Mvc.Services.Contracts
+namespace Northwind.Services.Contracts
 {
     public interface ICustomerService
     {

@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Northwind.Mvc.Helpers;
-using Northwind.Mvc.Services;
-using Northwind.Mvc.Services.Contracts;
+using Northwind.Services;
+using Northwind.Services.Contracts;
+using Northwind.Services.Helpers;
 
 namespace Northwind.Mvc
 {

@@ -1,4 +1,4 @@
-﻿namespace Northwind.Mvc.Helpers
+﻿namespace Northwind.Services.Helpers
 {
     public class Parameter
     {
