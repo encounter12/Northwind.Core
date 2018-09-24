@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Northwind.Mvc.Helpers;
+using Northwind.Mvc.Services;
+using Northwind.Mvc.Services.Contracts;
 
 namespace Northwind.Mvc
 {
@@ -29,6 +31,8 @@ namespace Northwind.Mvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IHttpHelpers, HttpHelpers>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

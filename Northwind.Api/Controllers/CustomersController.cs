@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Northwind.Services.Contracts;
 using Northwind.Services.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,8 +31,18 @@ namespace Northwind.Api.Controllers
         [HttpGet("customer/{id}")]
         public ActionResult<CustomerDetails> GetCustomerDetails(string id)
         {
-            CustomerDetails customer = this.customerService.GetCustomerDetails(id);
-            return Ok(customer);
+            CustomerDetails customerDetails = null;
+
+            try
+            {
+                customerDetails = this.customerService.GetCustomerDetails(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(customerDetails);
         }
 
         [HttpGet("customer/{id}/orders")]

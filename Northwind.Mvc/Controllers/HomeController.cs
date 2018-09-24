@@ -1,82 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Northwind.Mvc.Helpers;
 using Northwind.Mvc.Models;
+using Northwind.Mvc.Services.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Northwind.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IHttpHelpers httpHelpers;
+        private readonly ICustomerService customerService;
 
-        public HomeController(IHttpHelpers httpHelpers)
+        private readonly IOrderService orderService;
+
+        public HomeController(ICustomerService customerService, IOrderService orderService)
         {
-            this.httpHelpers = httpHelpers;
+            this.customerService = customerService;
+            this.orderService = orderService;
         }
 
-        public async Task<IActionResult> Index(string currentFilter, string searchString)
+        public async Task<IActionResult> Index(string searchString)
         {
-            string url = "https://localhost:44377";
-            string path = "customers";
+            IEnumerable<CustomerListViewModel> customers = null;
 
-            Response<List<CustomerListViewModel>> response = await this.httpHelpers
-                .DoApiGet<List<CustomerListViewModel>>(url, path);
-
-            List<CustomerListViewModel> customers = response.Data;
-
-            HttpStatusCode statusCode = response.StatusCode;
-            if (statusCode != HttpStatusCode.OK)
+            try
             {
+                customers = await this.customerService.GetCustomers(searchString);
+                ViewBag.CurrentFilter = searchString;
             }
-
-            ViewBag.CurrentFilter = searchString;
-
-            if (!string.IsNullOrEmpty(searchString))
+            catch (Exception)
             {
-                customers = customers.Where(c => c.ContactName.Contains(searchString)).ToList();
+                RedirectToAction("Error") ;
             }
-
-            customers = customers.OrderBy(c => c.ContactName).ToList();
 
             return View(customers);
         }
 
         public async Task<IActionResult> CustomerDetails(string id)
         {
-            string url = "https://localhost:44377";
-            string customerDetailsPath = "customer/{id}";
+            var customerDetailsOrdersModel = new CustomerDetailsOrdersModel();
 
-            Parameter CustomerIdParameter = new Parameter("id", id, ParameterType.UrlSegment);
-
-            Response<CustomerDetails> customerDetailsResponse = await this.httpHelpers
-                .DoApiGet<CustomerDetails>(url, customerDetailsPath, CustomerIdParameter);
-
-            HttpStatusCode statusCode = customerDetailsResponse.StatusCode;
-            if (statusCode != HttpStatusCode.OK)
+            try
             {
+                customerDetailsOrdersModel.CustomerDetails = await this.customerService.GetCustomerDetails(id);
+            }
+            catch (Exception)
+            {
+                RedirectToAction("Error");
             }
 
-            var customerDetailsViewModel = new CustomerDetailsOrdersModel();
-
-            customerDetailsViewModel.CustomerDetails = customerDetailsResponse.Data;
-
-            string customerOrdersPath = "customer/{id}/orders";
-
-            Response<List<OrderDetailsViewModel>> customerOrdersResponse = await this.httpHelpers
-                .DoApiGet<List<OrderDetailsViewModel>>(url, customerOrdersPath, CustomerIdParameter);
-
-            statusCode = customerOrdersResponse.StatusCode;
-            if (statusCode != HttpStatusCode.OK)
+            try
             {
+                customerDetailsOrdersModel.Orders = await this.orderService.GetOrdersForCustomer(id);
+            }
+            catch (Exception)
+            {
+                RedirectToAction("Error");
             }
 
-            customerDetailsViewModel.Orders = customerOrdersResponse.Data;
-
-            return View(customerDetailsViewModel);
+            return View(customerDetailsOrdersModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

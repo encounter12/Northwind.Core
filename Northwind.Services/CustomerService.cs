@@ -2,6 +2,7 @@
 using Northwind.Data.UnitOfWork;
 using Northwind.Services.Contracts;
 using Northwind.Services.Models;
+using System;
 using System.Linq;
 
 namespace Northwind.Services
@@ -32,6 +33,11 @@ namespace Northwind.Services
         public CustomerDetails GetCustomerDetails(string id)
         {
             Customers customer = this.unitOfWork.CustomerRepository.GetCustomerById(id);
+
+            if (customer == null)
+            {
+                throw new Exception($"Cannot find customer with id: {id}");
+            }
 
             var customerDetails = new CustomerDetails()
             {
