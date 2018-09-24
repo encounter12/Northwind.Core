@@ -11,6 +11,7 @@ namespace Northwind.Services
     public class OrderService : IOrderService
     {
         private readonly IHttpHelpers httpHelpers;
+        private const string ApiUrl = "http://localhost:5000";
 
         public OrderService(IHttpHelpers httpHelpers)
         {
@@ -19,13 +20,12 @@ namespace Northwind.Services
 
         public async Task<List<OrderDetailsViewModel>> GetOrdersForCustomer(string id)
         {
-            string url = "https://localhost:44377";
             string customerOrdersPath = "customer/{id}/orders";
 
             Parameter CustomerIdParameter = new Parameter("id", id, ParameterType.UrlSegment);
 
             Response<List<OrderDetailsViewModel>> customerOrdersResponse = await this.httpHelpers
-                .DoApiGet<List<OrderDetailsViewModel>>(url, customerOrdersPath, CustomerIdParameter);
+                .DoApiGet<List<OrderDetailsViewModel>>(ApiUrl, customerOrdersPath, CustomerIdParameter);
 
             HttpStatusCode statusCode = customerOrdersResponse.StatusCode;
 
