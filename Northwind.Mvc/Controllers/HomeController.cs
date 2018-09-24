@@ -31,7 +31,7 @@ namespace Northwind.Mvc.Controllers
             }
             catch (Exception)
             {
-                RedirectToAction("Error") ;
+                return RedirectToAction("Error") ;
             }
 
             return View(customers);
@@ -44,19 +44,11 @@ namespace Northwind.Mvc.Controllers
             try
             {
                 customerDetailsOrdersModel.CustomerDetails = await this.customerService.GetCustomerDetails(id);
-            }
-            catch (Exception)
-            {
-                RedirectToAction("Error");
-            }
-
-            try
-            {
                 customerDetailsOrdersModel.Orders = await this.orderService.GetOrdersForCustomer(id);
             }
             catch (Exception)
             {
-                RedirectToAction("Error");
+                return RedirectToAction("Error");
             }
 
             return View(customerDetailsOrdersModel);
