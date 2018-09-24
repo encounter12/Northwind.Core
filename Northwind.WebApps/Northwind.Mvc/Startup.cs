@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Northwind.Mvc.Configuration;
 using Northwind.Services;
 using Northwind.Services.Contracts;
 using Northwind.Services.Helpers;
@@ -29,13 +30,15 @@ namespace Northwind.Mvc
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<ApplicationSettings>(Configuration.GetSection("App"));
 
             services.AddScoped<IHttpHelpers, HttpHelpers>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddSingleton<IConfigurationService, ConfigurationService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfigurationService configurationService)
         {
             if (env.IsDevelopment())
             {
@@ -57,6 +60,9 @@ namespace Northwind.Mvc
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            ApplicationSettings appSettings = this.Configuration.GetSection("App").Get<ApplicationSettings>();
+            configurationService.NorthwindApiUrl = appSettings.NorthwindApiUrl;
         }
     }
 }

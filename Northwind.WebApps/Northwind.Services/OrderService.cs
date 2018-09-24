@@ -11,11 +11,12 @@ namespace Northwind.Services
     public class OrderService : IOrderService
     {
         private readonly IHttpHelpers httpHelpers;
-        private const string ApiUrl = "http://localhost:5000";
+        private readonly IConfigurationService configurationService;
 
-        public OrderService(IHttpHelpers httpHelpers)
+        public OrderService(IHttpHelpers httpHelpers, IConfigurationService configurationService)
         {
             this.httpHelpers = httpHelpers;
+            this.configurationService = configurationService;
         }
 
         public async Task<List<OrderDetailsViewModel>> GetOrdersForCustomer(string id)
@@ -24,8 +25,10 @@ namespace Northwind.Services
 
             Parameter CustomerIdParameter = new Parameter("id", id, ParameterType.UrlSegment);
 
-            Response<List<OrderDetailsViewModel>> customerOrdersResponse = await this.httpHelpers
-                .DoApiGet<List<OrderDetailsViewModel>>(ApiUrl, customerOrdersPath, CustomerIdParameter);
+            Response<List<OrderDetailsViewModel>> customerOrdersResponse = await this.httpHelpers.DoApiGet<List<OrderDetailsViewModel>>(
+                this.configurationService.NorthwindApiUrl,
+                customerOrdersPath,
+                CustomerIdParameter);
 
             HttpStatusCode statusCode = customerOrdersResponse.StatusCode;
 
