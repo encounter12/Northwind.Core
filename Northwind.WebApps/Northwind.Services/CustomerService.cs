@@ -12,6 +12,7 @@ namespace Northwind.Services
     public class CustomerService : ICustomerService
     {
         private readonly IHttpHelpers httpHelpers;
+        private const string ApiUrl = "http://localhost:5000";
 
         public CustomerService(IHttpHelpers httpHelpers)
         {
@@ -20,11 +21,10 @@ namespace Northwind.Services
 
         public async Task<IEnumerable<CustomerListViewModel>> GetCustomers(string searchString)
         {
-            string url = "https://localhost:44377";
             string path = "customers";
 
             Response<List<CustomerListViewModel>> response = await this.httpHelpers
-                .DoApiGet<List<CustomerListViewModel>>(url, path);
+                .DoApiGet<List<CustomerListViewModel>>(ApiUrl, path);
 
             HttpStatusCode statusCode = response.StatusCode;
 
@@ -47,13 +47,12 @@ namespace Northwind.Services
 
         public async Task<CustomerDetails> GetCustomerDetails(string id)
         {
-            string url = "https://localhost:44377";
             string customerDetailsPath = "customer/{id}";
 
             Parameter CustomerIdParameter = new Parameter("id", id, ParameterType.UrlSegment);
 
             Response<CustomerDetails> customerDetailsResponse = await this.httpHelpers
-                .DoApiGet<CustomerDetails>(url, customerDetailsPath, CustomerIdParameter);
+                .DoApiGet<CustomerDetails>(ApiUrl, customerDetailsPath, CustomerIdParameter);
 
             HttpStatusCode statusCode = customerDetailsResponse.StatusCode;
             if (statusCode != HttpStatusCode.OK)
