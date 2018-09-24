@@ -1,10 +1,10 @@
 ﻿using Northwind.Services.Models;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Northwind.Services.Contracts
 {
     public interface IOrderService
     {
-        IQueryable<OrderDetailsViewModel> GetOrdersByCustomer(string customerId);
+        IEnumerable<OrderDetailsModel> GetOrdersByCustomer(string customerId);
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace Northwind.Services.Models
+﻿namespace Northwind.Data.DataTransferObjects
 {
-    public class OrderDetailsViewModel
+    public class OrderDetailsDTO
     {
         public decimal Total { get; set; }
 

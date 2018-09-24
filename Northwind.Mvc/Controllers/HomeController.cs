@@ -3,6 +3,7 @@ using Northwind.Mvc.Helpers;
 using Northwind.Mvc.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Northwind.Mvc.Controllers
             this.httpHelpers = httpHelpers;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString)
         {
             string url = "https://localhost:44377";
             string path = "customers";
@@ -31,6 +32,15 @@ namespace Northwind.Mvc.Controllers
             if (statusCode != HttpStatusCode.OK)
             {
             }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                customers = customers.Where(c => c.ContactName.Contains(searchString)).ToList();
+            }
+
+            customers = customers.OrderBy(c => c.ContactName).ToList();
 
             return View(customers);
         }

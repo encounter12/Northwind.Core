@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Northwind.Data.DataTransferObjects;
 using Northwind.Data.Models;
 using Northwind.Data.Repositories.Contracts;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Northwind.Data.Repositories
@@ -14,11 +16,17 @@ namespace Northwind.Data.Repositories
             this.context = context;
         }
 
-        public IQueryable<Orders> GetOrdersByCustomer(string customerId)
+        public IEnumerable<OrderDetailsDTO> GetOrdersByCustomer(string customerId)
         {
-            IQueryable<Orders> orders = this.All()
+            IEnumerable<OrderDetailsDTO> orders = this.All()
                 .Where(o => o.CustomerId == customerId)
-                .Include(c => c.OrderDetails);
+                .Select(o => new OrderDetailsDTO()
+                {
+                    Total = o.OrderDetails.Sum(od => od.UnitPrice * (1M - Convert.ToDecimal(od.Discount)) * od.Quantity),
+                    ProductsCount = o.OrderDetails.Count(),
+                    PossibleIssue = o.OrderDetails.Any(od =>
+                        od.Product.Discontinued == true || od.Product.UnitsInStock < od.Product.UnitsOnOrder)
+                }).ToList();
 
             return orders;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Northwind.Services.Contracts;
 using Northwind.Services.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Northwind.Api.Controllers
@@ -34,9 +35,9 @@ namespace Northwind.Api.Controllers
         }
 
         [HttpGet("customer/{id}/orders")]
-        public ActionResult<IQueryable<OrderDetailsViewModel>> GetCustomerOrders(string id)
+        public ActionResult<IQueryable<OrderDetailsModel>> GetCustomerOrders(string id)
         {
-            IQueryable<OrderDetailsViewModel> orders = this.orderService.GetOrdersByCustomer(id);
+            IEnumerable<OrderDetailsModel> orders = this.orderService.GetOrdersByCustomer(id);
 
             return Ok(orders);
         }

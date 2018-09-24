@@ -1,10 +1,11 @@
-﻿using Northwind.Data.Models;
-using System.Linq;
+﻿using Northwind.Data.DataTransferObjects;
+using Northwind.Data.Models;
+using System.Collections.Generic;
 
 namespace Northwind.Data.Repositories.Contracts
 {
     public interface IOrderRepository : IGenericRepository<Orders>
     {
-        IQueryable<Orders> GetOrdersByCustomer(string customerId);
+        IEnumerable<OrderDetailsDTO> GetOrdersByCustomer(string customerId);
     }
 }

@@ -3,32 +3,48 @@
     ViewData["Title"] = "Home Page";
 }
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ContactName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().OrdersCount)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var customer in @Model)
-        {
+<div class="container">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-horizontal" }))
+    {
+        <div class="col-xs-4 search-field">
+            @Html.TextBox(
+                "SearchString",
+                ViewBag.CurrentFilter as string,
+                new {@class = "form-control", placeholder = "Search"})
+        </div>
+
+        <button class="btn btn-info glyphicon glyphicon-search" type="submit"></button>
+    }
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@customer.ContactName</td>
-                <td>
-                    <span class="badge">
-                        @customer.OrdersCount
-                    </span>
-               </td>
-                <td class="list-group-item">
-                    @Html.ActionLink("Details", "CustomerDetails", new { id = customer.Id })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ContactName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().OrdersCount)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var customer in @Model)
+            {
+                <tr>
+                    <td>@customer.ContactName</td>
+                    <td>
+                        <span class="badge">
+                            @customer.OrdersCount
+                        </span>
+                    </td>
+                    <td class="list-group-item">
+                        <a href="@Url.Action("CustomerDetails", "Home", new { id = customer.Id })" title="Details">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
