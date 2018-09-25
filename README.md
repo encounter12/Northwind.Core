@@ -23,6 +23,8 @@ Rest API Documentation: Swagger <br />
 Database engine:
 Microsoft SQL Server 2016 LocalDB (version: 13.1.4001.0)
 
+Database server name: (LocalDb)\MSSQLLocalDB
+
 .NET Core SDK Version: 2.1.402 <br />
 Host Version: 2.1.4
 
