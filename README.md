@@ -22,10 +22,10 @@ Microsoft SQL Server 2016 LocalDB (version: 13.1.4001.0)
 Host Version: 2.1.4
 
 Runtime Environment:
-OS Name: Windows
-OS Version: 6.1.7601
-OS Platform: Windows
-RID: win7-x64
+OS Name: Windows <br />
+OS Version: 6.1.7601 <br />
+OS Platform: Windows <br />
+RID: win7-x64 <br />
 Base Path: C:\Program Files\dotnet\sdk\2.1.402\
 
 .NET Core runtimes:
