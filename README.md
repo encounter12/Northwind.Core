@@ -4,7 +4,7 @@ This repository contains simple layered architecture including ASP.NET Core MVC 
 <h2>Instructions</h2>
 
 Clone the repository with:
-git clone git@github.com:encounter12/Northwind.Core.git
+"git clone git@github.com:encounter12/Northwind.Core.git"
 
 Run the Northwind Database SQL script (https://github.com/encounter12/Northwind.Core/blob/master/Northwind.RestApis/Northwind.Data/Seed/Northwind.sql)
 on Database Server name: (LocalDb)\MSSQLLocalDB 
