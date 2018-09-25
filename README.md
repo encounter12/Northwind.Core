@@ -18,7 +18,7 @@ https://github.com/encounter12/Northwind.Core/blob/master/Start.bat
 Database engine:
 Microsoft SQL Server 2016 LocalDB (version: 13.1.4001.0)
 
-.NET Core SDK Version: 2.1.402
+.NET Core SDK Version: 2.1.402 <br />
 Host Version: 2.1.4
 
 Runtime Environment:
