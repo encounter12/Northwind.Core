@@ -38,7 +38,9 @@ namespace Northwind.Services
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                customers = customers.Where(c => c.ContactName.Contains(searchString)).ToList();
+                customers = customers
+                    .Where(c => c.ContactName.ToLower().Contains(searchString.ToLower()))
+                    .ToList();
             }
 
             customers = customers.OrderBy(c => c.ContactName).ToList();
