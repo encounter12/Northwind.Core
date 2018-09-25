@@ -30,7 +30,7 @@ Base Path: C:\Program Files\dotnet\sdk\2.1.402\
 
 .NET Core runtimes:
 
-Microsoft.AspNetCore.App 2.1.4 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
-Microsoft.NETCore.App 2.1.4 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.AspNetCore.App 2.1.4 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App] <br />
+Microsoft.NETCore.App 2.1.4 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App] <br />
 
 Developed with: Microsoft Visual Studio 2017, Version 15.8.5
