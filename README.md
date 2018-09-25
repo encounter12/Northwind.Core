@@ -11,6 +11,13 @@ on Database Server name: (LocalDb)\MSSQLLocalDB
 
 For running applications automatically in release mode double click on Start.bat (localted in the main folder Northwind.Core).
 
+Development URLs:
+
+Northwind Rest API: http://localhost:5000 <br />
+Northwind MVC: http://localhost:5001 <br />
+
+Rest API Documentation: Swagger <br />
+
 <h3>Environment used</h3>
 
 Database engine:
