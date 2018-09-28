@@ -9,6 +9,7 @@ using Northwind.Data.Repositories;
 using Northwind.Data.Repositories.Contracts;
 using Northwind.Data.UnitOfWork;
 using Northwind.Services;
+using Northwind.Services.Configuration;
 using Northwind.Services.Contracts;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -26,6 +27,22 @@ namespace Northwind.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //This configuration is needed if 'IOptions<AppData> appDataAccessor' is injected into class constructor
+            //services.Configure<AppData>(Configuration.GetSection("AppData"));
+
+            AppData appData = Configuration.GetSection("AppData").Get<AppData>();
+
+            services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(appData.ConnectionString));
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -49,18 +66,6 @@ namespace Northwind.Api
                     }
                 });
             });
-
-            services.AddDbContext<NorthwindContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("NorthwindDatabase")));
-
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IOrderService, OrderService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

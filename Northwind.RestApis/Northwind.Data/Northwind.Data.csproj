@@ -19,4 +19,10 @@
     <Folder Include="Seed\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Configuration\appdata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
