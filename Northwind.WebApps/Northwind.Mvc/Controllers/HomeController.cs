@@ -31,7 +31,7 @@ namespace Northwind.Mvc.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Error") ;
+                return RedirectToAction("Error");
             }
 
             return View(customers);

@@ -11,9 +11,6 @@ using Northwind.Data.UnitOfWork;
 using Northwind.Services;
 using Northwind.Services.Contracts;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace Northwind.Api
 {
@@ -53,8 +50,8 @@ namespace Northwind.Api
                 });
             });
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=Northwind;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<NorthwindContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("NorthwindDatabase")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
