@@ -7,10 +7,6 @@ namespace Northwind.Data
     {
         public static void Main(string[] args)
         {
-            //using (NorthwindContext context = new NorthwindContext())
-            //{
-            //    DatabaseInitializer.SeedData(context);
-            //}
         }
     }
 }
