@@ -9,7 +9,7 @@ Clone the repository with:
 Run the Northwind Database SQL script (https://github.com/encounter12/Northwind.Core/blob/master/Northwind.RestApis/Northwind.Data/Seed/Northwind.sql)
 on Database Server name: (LocalDb)\MSSQLLocalDB 
 
-For running applications automatically in release mode double click on Start.bat (localted in the main folder Northwind.Core).
+For running applications automatically in release mode double click on Start.bat (located in the main folder Northwind.Core).
 
 Development URLs:
 
