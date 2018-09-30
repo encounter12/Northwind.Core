@@ -34,8 +34,8 @@ namespace Northwind.Api
 
             AppData appData = Configuration.GetSection("AppData").Get<AppData>();
 
-            services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(appData.NorthwindDbConnectionString));
             services.AddDbContext<MasterContext>(options => options.UseSqlServer(appData.MasterDbConnectionString));
+            services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(appData.NorthwindDbConnectionString));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -84,18 +84,18 @@ namespace Northwind.Api
                 c.RoutePrefix = string.Empty;
             });
 
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var masterContext = serviceScope.ServiceProvider.GetService<MasterContext>();
+                var northwindContext = serviceScope.ServiceProvider.GetService<NorthwindContext>();
+
+                var databaseConfigurationService = serviceScope.ServiceProvider.GetService<IDatabaseConfigurationService>();
+                databaseConfigurationService.SeedData(northwindContext, masterContext);
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                {
-                    var northwindContext = serviceScope.ServiceProvider.GetService<NorthwindContext>();
-                    var masterContext = serviceScope.ServiceProvider.GetService<MasterContext>();
-
-                    var databaseConfigurationService = serviceScope.ServiceProvider.GetService<IDatabaseConfigurationService>();
-                    databaseConfigurationService.SeedData(northwindContext, masterContext);
-                }
             }
             else
             {
