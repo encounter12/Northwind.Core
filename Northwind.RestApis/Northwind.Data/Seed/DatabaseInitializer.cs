@@ -26,9 +26,11 @@ namespace Northwind.Data.Seed
 
                 string masterDbConnectionString = masterContext.Database.GetDbConnection().ConnectionString;
 
+                // Overview (SMO): https://docs.microsoft.com/en-us/sql/relational-databases/server-management-objects-smo/overview-smo?view=sql-server-2017
                 using (SqlConnection connection = new SqlConnection(masterDbConnectionString))
                 {
                     Server server = new Server(new ServerConnection(connection));
+                    //https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2014/ms199350%28v%3dsql.120%29
                     server.ConnectionContext.ExecuteNonQuery(seedSql);
                 }
                 
