@@ -12,8 +12,9 @@ namespace Northwind.Api
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.SetBasePath(AppContext.BaseDirectory);
@@ -21,5 +22,6 @@ namespace Northwind.Api
                     config.AddCommandLine(args);
                 })
                 .UseStartup<Startup>();
+        }
     }
 }
