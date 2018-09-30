@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using System.IO;
+using System;
 
 namespace Northwind.Api
 {
-    public class Program
+    public class EntryPoint
     {
         public static void Main(string[] args)
         {
@@ -16,7 +16,7 @@ namespace Northwind.Api
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.SetBasePath(System.AppContext.BaseDirectory);
+                    config.SetBasePath(AppContext.BaseDirectory);
                     config.AddJsonFile("Configuration/appdata.json", optional: false, reloadOnChange: false);
                     config.AddCommandLine(args);
                 })

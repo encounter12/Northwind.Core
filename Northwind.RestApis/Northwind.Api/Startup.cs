@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Northwind.Data;
 using Northwind.Data.Models;
 using Northwind.Data.Repositories;
 using Northwind.Data.Repositories.Contracts;
@@ -33,7 +34,8 @@ namespace Northwind.Api
 
             AppData appData = Configuration.GetSection("AppData").Get<AppData>();
 
-            services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(appData.ConnectionString));
+            services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(appData.NorthwindDbConnectionString));
+            services.AddDbContext<MasterContext>(options => options.UseSqlServer(appData.MasterDbConnectionString));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -43,6 +45,7 @@ namespace Northwind.Api
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IDatabaseConfigurationService, DatabaseConfigurationService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -84,6 +87,15 @@ namespace Northwind.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    var northwindContext = serviceScope.ServiceProvider.GetService<NorthwindContext>();
+                    var masterContext = serviceScope.ServiceProvider.GetService<MasterContext>();
+
+                    var databaseConfigurationService = serviceScope.ServiceProvider.GetService<IDatabaseConfigurationService>();
+                    databaseConfigurationService.SeedData(northwindContext, masterContext);
+                }
             }
             else
             {
