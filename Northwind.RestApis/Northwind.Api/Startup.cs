@@ -6,10 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Northwind.Data;
 using Northwind.Data.Models;
-using Northwind.Data.Repositories;
-using Northwind.Data.Repositories.Contracts;
-using Northwind.Data.UnitOfWork;
-using Northwind.Services;
+using Northwind.DI;
 using Northwind.Services.Configuration;
 using Northwind.Services.Contracts;
 using Swashbuckle.AspNetCore.Swagger;
@@ -37,15 +34,7 @@ namespace Northwind.Api
             services.AddDbContext<MasterContext>(options => options.UseSqlServer(appData.MasterDbConnectionString));
             services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(appData.NorthwindDbConnectionString));
 
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IDatabaseConfigurationService, DatabaseConfigurationService>();
+            services.AddDependencyInjection(DiContainers.AspNetCoreDependencyInjector);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
