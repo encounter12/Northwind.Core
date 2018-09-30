@@ -8,7 +8,6 @@ using Northwind.Data;
 using Northwind.Data.Models;
 using Northwind.DI;
 using Northwind.Services.Configuration;
-using Northwind.Services.Contracts;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Northwind.Api
@@ -72,15 +71,6 @@ namespace Northwind.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Northwind REST API");
                 c.RoutePrefix = string.Empty;
             });
-
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var masterContext = serviceScope.ServiceProvider.GetService<MasterContext>();
-                var northwindContext = serviceScope.ServiceProvider.GetService<NorthwindContext>();
-
-                var databaseConfigurationService = serviceScope.ServiceProvider.GetService<IDatabaseConfigurationService>();
-                databaseConfigurationService.SeedData(northwindContext, masterContext);
-            }
 
             if (env.IsDevelopment())
             {
