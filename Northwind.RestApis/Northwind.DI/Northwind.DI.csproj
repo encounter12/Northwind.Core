@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Northwind.Data\Northwind.Data.csproj" />
+    <ProjectReference Include="..\Northwind.Infrastructure\Northwind.Infrastructure.csproj" />
     <ProjectReference Include="..\Northwind.Services\Northwind.Services.csproj" />
   </ItemGroup>
 

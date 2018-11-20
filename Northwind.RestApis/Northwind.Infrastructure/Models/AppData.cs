@@ -1,4 +1,4 @@
-﻿namespace Northwind.Services.Configuration
+﻿namespace Northwind.Infrastructure.Models
 {
     public class AppData
     {
