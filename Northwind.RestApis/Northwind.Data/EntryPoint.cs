@@ -41,6 +41,8 @@ namespace Northwind.Data
             {
                 Debug.WriteLine(ex);
             }
+
+            Environment.Exit(0);
         }
     }
 }
