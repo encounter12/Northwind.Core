@@ -1,3 +1,6 @@
+echo "Confirm trusting SSL certificate"
+dotnet dev-certs https --trust
+
 echo "Starting Build"
 dotnet build Northwind.RestApis\Northwind.RestApis.sln
 dotnet build Northwind.WebApps\Northwind.WebApps.sln
