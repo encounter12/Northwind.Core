@@ -30,6 +30,12 @@ namespace Northwind.Mvc
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 44315;
+            });
+
             services.Configure<ApplicationSettings>(Configuration.GetSection("App"));
 
             services.AddScoped<IHttpHelpers, HttpHelpers>();

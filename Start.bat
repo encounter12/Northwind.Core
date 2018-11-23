@@ -12,9 +12,9 @@ start /WAIT "Northwind Data" cmd /c "dotnet Northwind.Data.dll"
 popd
 
 pushd Northwind.RestApis\Northwind.Api\bin\Release\netcoreapp2.1\publish\
-start "Northwind Rest API" cmd /c "dotnet Northwind.Api.dll --server.urls ""http://localhost:5000""
+start "Northwind Rest API" cmd /c "dotnet Northwind.Api.dll --server.urls ""https://localhost:44346""
 popd
 
 pushd Northwind.WebApps\Northwind.Mvc\bin\Release\netcoreapp2.1\publish\
-start "Northwind Web App (MVC)" cmd /c "dotnet Northwind.Mvc.dll --server.urls ""http://localhost:5001""
+start "Northwind Web App (MVC)" cmd /c "dotnet Northwind.Mvc.dll --server.urls ""https://localhost:44315""
 popd
